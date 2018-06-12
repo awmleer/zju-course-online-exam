@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import './app.css'
 import { Layout, Menu, Breadcrumb, Icon } from 'antd'
-import {Switch, Route, Link} from 'react-router-dom'
-
-import {Home} from '../home/home'
-import {QuestionList} from '../question-list/question-list'
+import {Routes} from '../routes/routes'
 
 const { Header, Content, Footer, Sider } = Layout
 const SubMenu = Menu.SubMenu
@@ -34,14 +31,11 @@ class App extends Component {
             </Menu.Item>
           </Menu>
         </Sider>
-        <Layout style={{ marginLeft: 200 }}>
+        <Layout style={{ marginLeft: 200, minHeight: '100vh' }}>
           <Header style={{ background: '#fff', padding: 0 }} />
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
             <div style={{ padding: 24, background: '#fff', textAlign: 'center' }}>
-              <Switch>
-                <Route exact path='/' component={Home}/>
-                <Route path='/question/list' component={QuestionList}/>
-              </Switch>
+              <Routes/>
             </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>
