@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Home} from '../home/home'
 import {QuestionList} from '../question-list/question-list'
-import {Switch, Route, Link} from 'react-router-dom'
+import {Switch, Route} from 'react-router-dom'
 
 
 export class Routes extends Component {
@@ -9,6 +9,7 @@ export class Routes extends Component {
     return (
       <Switch>
         <Route exact path='/' component={Home}/>
+        <Route path='/home' component={Home}/>
         <Route path='/question/list' component={QuestionList}/>
       </Switch>
     )

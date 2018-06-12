@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './app.css'
 import { Layout, Menu, Breadcrumb, Icon } from 'antd'
 import {Routes} from '../routes/routes'
-
+import {Link} from 'react-router-dom'
 const { Header, Content, Footer, Sider } = Layout
 const SubMenu = Menu.SubMenu
 
@@ -22,7 +22,12 @@ class App extends Component {
           <div className="logo" />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
             <SubMenu key="sub1" title={<span><Icon type="edit" /><span>在线测试</span></span>}>
-              <Menu.Item key="1">题库管理</Menu.Item>
+              <Menu.Item key="home">
+                <Link to='/home'>首页</Link>
+              </Menu.Item>
+              <Menu.Item key="question-list">
+                <Link to='/question/list'>题库管理</Link>
+              </Menu.Item>
               <Menu.Item key="2">考试管理</Menu.Item>
             </SubMenu>
             <Menu.Item key="3">
