@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
+import './index.scss'
 import App from './components/app/app'
 import registerServiceWorker from './registerServiceWorker'
 import {BrowserRouter as Router} from 'react-router-dom'

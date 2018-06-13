@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './app.css'
+import './app.scss'
 import { Layout, Menu, Breadcrumb, Icon } from 'antd'
 import {Routes} from '../routes/routes'
 import {Link} from 'react-router-dom'
@@ -39,7 +39,7 @@ class App extends Component {
         <Layout style={{ marginLeft: 200, minHeight: '100vh' }}>
           <Header style={{ background: '#fff', padding: 0 }} />
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-            <div style={{ padding: 24, background: '#fff', textAlign: 'center' }}>
+            <div style={{ padding: 24, background: '#fff' }}>
               <Routes/>
             </div>
           </Content>
