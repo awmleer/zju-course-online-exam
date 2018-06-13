@@ -1,6 +1,10 @@
 .items{
-  background-color: #222222;
   .item{
-    border-color: aqua;
+    border-bottom: solid 1px #cecece;
+    padding: 10px;
+  }
+  .item:last-child{
+    border-bottom: none;
   }
 }
+
