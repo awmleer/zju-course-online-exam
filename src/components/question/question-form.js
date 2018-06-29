@@ -10,12 +10,16 @@ const TextArea = Input.TextArea
 class RawForm extends Component {
   constructor(props){
     super(props)
-    this.state = props.question
+    // this.state = props.question
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state)
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log(values)
+      }
+    });
   }
   
   render(){
@@ -24,15 +28,16 @@ class RawForm extends Component {
 
 
 
-    const option_list=this.state.options.map((option)=>{
-        return (
-          <Form.Item>
-            <TextArea>{option.title}</TextArea>
-            <Button type={'danger'}>删除</Button>
-          </Form.Item>
-        )
-      }
-    )
+    // const option_list=this.state.options.map((option)=>{
+    //     return (
+    //       <Form.Item>
+    //         <TextArea>{option.title}</TextArea>
+    //         <Button type={'danger'}>删除</Button>
+    //       </Form.Item>
+    //     )
+    //   }
+    // )
+
     // console.log(option_list)
 // const options = this.state.options.map((option)=>{
 //     return (
@@ -43,11 +48,11 @@ class RawForm extends Component {
 // )
     return (
       <Form onSubmit={this.handleSubmit}>
-        {getFieldDecorator('description',{})(
-          <Form.Item {...formItemLayout} label='题目名称'>
-            <TextArea value={this.state.description} onChange={e=>this.setState({description:e.target.value})}/>
-          </Form.Item>
-        )}
+        <Form.Item {...formItemLayout} label='题目名称'>
+          {getFieldDecorator('description',{})(
+            <Input/>
+          )}
+        </Form.Item>
         {/*<Form.Item {...formItemLayout} label={'描述'}>*/}
           {/*<TextArea name='description' value={this.state.description} onChange={this.handleChange} rows={4}/>*/}
         {/*</Form.Item>*/}
@@ -79,4 +84,14 @@ class RawForm extends Component {
 }
 
 
-export const QuestionForm = Form.create()(RawForm);
+export const QuestionForm = Form.create({
+  mapPropsToFields(props) {
+    let fieldObj = {}
+    for(let key of Object.keys(props.question)){
+      fieldObj[key] = Form.createFormField({
+        value: props.question[key],
+      })
+    }
+    return fieldObj
+  },
+})(RawForm)
