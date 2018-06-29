@@ -15,6 +15,7 @@ class App extends Component {
     console.log(collapsed)
     this.setState({ collapsed })
   }
+
   render() {
     return (
       <Layout>
