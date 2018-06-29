@@ -36,18 +36,19 @@ export class QuestionGroupList extends Component {
 
 
   render(){
-    const questionItems = this.state.groups.map((group) => {
+    const groupItems = this.state.groups.map((group) => {
       return (
         <Item key={group.id.toString()} title={group.name}>
-          <Button type='default'>Primary</Button>
+          <Button type='default'>编辑</Button>
+          <Button type='danger'>删除</Button>
         </Item>
       )
     })
     return (
       <div>
-        <Button type='primary' onClick={this.test}>创建题库</Button>
+        <Button type='primary' onClick={this.test}>创建题目组</Button>
         <ItemList>
-          {questionItems}
+          {groupItems}
         </ItemList>
       </div>
     )

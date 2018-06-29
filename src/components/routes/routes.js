@@ -12,6 +12,7 @@ export class Routes extends Component {
         <Route exact path='/' component={Home}/>
         <Route path='/home' component={Home}/>
         <Route path='/question-group/list' component={QuestionGroupList}/>
+        <Route path='/question/list' component={QuestionList}/>
       </Switch>
     )
   }
