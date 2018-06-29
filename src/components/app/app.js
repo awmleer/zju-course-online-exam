@@ -26,7 +26,7 @@ class App extends Component {
                 <Link to='/home'>首页</Link>
               </Menu.Item>
               <Menu.Item key="question-list">
-                <Link to='/question/list'>题库管理</Link>
+                <Link to='/question-group/list'>题库管理</Link>
               </Menu.Item>
               <Menu.Item key="2">考试管理</Menu.Item>
             </SubMenu>

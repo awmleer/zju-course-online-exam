@@ -5,7 +5,10 @@ export class Item extends Component {
   render(){
     return (
       <div className='item'>
-        {this.props.children}
+        <h2>{this.props.title}</h2>
+        <div className='actions'>
+          {this.props.children}
+        </div>
       </div>
     )
   }

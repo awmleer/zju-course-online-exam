@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Item, ItemList} from '../item-list/item-list'
+import './question-list.scss'
 
 export class QuestionList extends Component {
   questions = [

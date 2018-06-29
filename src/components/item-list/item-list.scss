@@ -2,6 +2,15 @@
   .item{
     border-bottom: solid 1px #cecece;
     padding: 10px;
+    position: relative;
+    h2{
+      margin: 5px 0;
+    }
+    .actions{
+      position: absolute;
+      right: 15px;
+      top: 15px;
+    }
   }
   .item:last-child{
     border-bottom: none;
