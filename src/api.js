@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const apiUrl = 'http://localhost:8000'
+const apiUrl = 'http://192.168.0.8:8000'
 
 export function get(url){
   return axios.get(apiUrl+url)
