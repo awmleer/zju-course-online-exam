@@ -7,6 +7,8 @@ const AutoCompleteOption = AutoComplete.Option
 const Item = List.Item
 const {TextArea} = Input
 
+const option_index = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T']
+
 export class Question extends Component {
   constructor(props){
     super(props)
@@ -27,22 +29,24 @@ export class Question extends Component {
 
   }
   handleChange = (name,value) =>{
-    this.setState({
-      [name]: value
-    })
+    console.log(name,value)
+    // this.setState({
+    //   Question[name]: value
+    // })
+    console.log(this.state.Question.question_type)
   }
   render(){
     const getFieldDecorator = this.props.form
-    const option_list=this.state.Question.options.map((option)=>{
+    const option_list=this.state.Question.options.map((option,index)=>{
         return (
-          <Item>
-            <TextArea>{option.title}</TextArea>
+          <Item key={option_index[index]} >
+            <TextArea>{option_index[index]+' : '+option.content}</TextArea>
             <Button type={'danger'}>删除</Button>
           </Item>
         )
       }
     )
-    console.log(option_list)
+    // console.log(option_list)
     // const options = this.state.options.map((option)=>{
     //     return (
     //       <Option name={}/>
@@ -53,7 +57,7 @@ export class Question extends Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem label={'题目名称'}>
-          <TextArea name='question_name' value={this.state.Question.question_name} onChange={(e)=>this.handleChange('question_name',e)}/>
+          <TextArea name='question_name' value={this.state.Question.question_name} onChange={(value)=>this.handleChange('question_name',value)}/>
         </FormItem>
         <FormItem label={'描述'}>
           <TextArea name='description' value={this.state.Question.description} onChange={this.handleChange} rows={4}/>
