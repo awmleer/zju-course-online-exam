@@ -57,15 +57,18 @@ class RawForm extends Component {
   transferData=()=>{
     this.props.form.validateFields((err, values) => {
       if (!err) {
+
         const data={
           type:values.type,
           description:values.description,
           keypoints:values.keypoints,
-          options:values.optionContent,
-          solution:values.optionContent[values.correctOptionId]
+          options:values.optionId.map((id,index)=>{
+            return {key:option_index[index],content:values.optionContent[id]}
+          }),
+          solution:option_index[values.optionId.indexOf(values.correctOptionId)]
         }
         // console.log(values.correctOptionId)
-        // console.log(data)
+        console.log(data)
         return data
       }
     });
