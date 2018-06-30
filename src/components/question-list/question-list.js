@@ -9,19 +9,29 @@ export class QuestionList extends Component {
   constructor(props){
     super(props)
     this.state = {
-      questions: [
-        {id: 1, description: 'test'},
-      ]
+      questions: []
     }
   }
 
   componentDidMount() {
+    this.fetchQuestionList()
+  }
+
+  fetchQuestionList = ()=>{
     api.get('/question/list/').then((data) => {
       console.log(data)
       this.setState({
         questions: data
       })
     })
+  }
+
+  deleteQuestion = (questionId)=>{
+    return ()=>{
+      api.get(`/question/${questionId}/delete/`).then(() => {
+        this.fetchQuestionList()
+      })
+    }
   }
 
   render(){
@@ -31,7 +41,7 @@ export class QuestionList extends Component {
           <Link to={'/question/'+question.id}>
             <Button type='default'>编辑</Button>
           </Link>
-          <Button type='danger'>删除</Button>
+          <Button type='danger' onClick={this.deleteQuestion(question.id)}>删除</Button>
         </Item>
       )
     })

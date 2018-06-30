@@ -12,7 +12,7 @@ export class C extends Component {
       question: null,
     }
     if(questionId){
-      api.get(`/question/${questionId}`).then((data) => {
+      api.get(`/question/${questionId}/`).then((data) => {
         this.setState({
           question: data
         })
