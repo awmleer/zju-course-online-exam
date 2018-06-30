@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Form, Select, AutoComplete, Button, Input, List, Icon} from 'antd'
-import {formItemLayout, tailFormItemLayout} from '../../form'
+import {formItemLayoutWithLabel, formItemLayoutWithoutLabel} from '../../form'
 
 const Option = Select.Option
 const AutoCompleteOption = AutoComplete.Option
@@ -48,16 +48,6 @@ class RawForm extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(values)
-        const data = this.transferData()
-      }
-    });
-  }
-
-  transferData=()=>{
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-
         const data={
           type:values.type,
           description:values.description,
@@ -67,9 +57,11 @@ class RawForm extends Component {
           }),
           solution:option_index[values.optionId.indexOf(values.correctOptionId)]
         }
-        // console.log(values.correctOptionId)
-        console.log(data)
-        return data
+        let onSubmit = this.props.onSubmit
+        if(onSubmit){
+          console.log(data)
+          onSubmit(data)
+        }
       }
     });
   }
@@ -77,18 +69,12 @@ class RawForm extends Component {
 
   render(){
     const { getFieldDecorator,getFieldValue } = this.props.form;
-    const formItemLayoutWithOutLabel = {
-      wrapperCol: {
-        xs: { span: 24, offset: 0 },
-        sm: { span: 20, offset: 4 },
-      },
-    }
     getFieldDecorator('optionId', { initialValue: [] });
     const optionId = getFieldValue('optionId');
     const formItems = optionId.map((option, index) => {
       return (
         <Form.Item
-          {...formItemLayout}
+          {...formItemLayoutWithLabel}
           label={'选项'+option_index[index]}
           required={false}
           key={option}
@@ -123,12 +109,12 @@ class RawForm extends Component {
     })
     return (
       <Form onSubmit={this.handleSubmit}>
-        <Form.Item {...formItemLayout} label='题目描述'>
+        <Form.Item {...formItemLayoutWithLabel} label='题目描述'>
           {getFieldDecorator('description',{})(
             <Input/>
           )}
         </Form.Item>
-        <Form.Item {...formItemLayout} label={'题型'}>
+        <Form.Item {...formItemLayoutWithLabel} label={'题型'}>
           {getFieldDecorator('type')(
             <Select >
               <Option value={'判断题'}>判断题</Option>
@@ -136,25 +122,25 @@ class RawForm extends Component {
             </Select>
           )}
         </Form.Item>
-        <Form.Item {...formItemLayout} label={'所考察知识点'}>
+        <Form.Item {...formItemLayoutWithLabel} label={'所考察知识点'}>
           {getFieldDecorator('keypoints',{})(
             <Input/>
           )}
         </Form.Item>
         {formItems}
-        <Form.Item {...formItemLayoutWithOutLabel}>
+        <Form.Item {...formItemLayoutWithoutLabel}>
           <Button type="dashed" onClick={this.add} style={{ width: '60%' }}>
             <Icon type="plus" /> 添加选项
           </Button>
         </Form.Item>
-        <Form.Item {...formItemLayout} label={'正确选项'}>
+        <Form.Item {...formItemLayoutWithLabel} label={'正确选项'}>
           {getFieldDecorator('correctOptionId')(
             <Select>
               {option_index_list}
             </Select>
           )}
         </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
+        <Form.Item {...formItemLayoutWithoutLabel}>
           <Button type="primary" htmlType="submit">提交</Button>
         </Form.Item>
       </Form>

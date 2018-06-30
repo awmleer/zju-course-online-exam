@@ -19,14 +19,17 @@ export class Question extends Component {
 
   }
 
-  handleSubmit = (e) =>{
-
+  handleOnSubmit = (data) =>{
+    console.log(data)
+    api.post('/question/create/', data).then(() => {
+      this.props.history.push('/question/list')
+    })
   }
 
   render(){
     return (
       <div>
-        <QuestionForm question={this.state.question}/>
+        <QuestionForm question={this.state.question} onSubmit={this.handleOnSubmit}/>
       </div>
     )
   }
