@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import * as api from '../../api'
 import {QuestionForm} from './question-form'
 import {withRouter} from 'react-router-dom'
+import message from 'antd/es/message/index'
 
 
 export class C extends Component {
@@ -26,9 +27,13 @@ export class C extends Component {
     console.log(data)
     let p
     if (this.questionId) {
-      p = api.post(`/question/${this.questionId}/update/`, data)
+      p = api.post(`/question/${this.questionId}/update/`, data).then(() => {
+        message.success('修改成功')
+      })
     }else{
-      p = api.post('/question/create/', data)
+      p = api.post('/question/create/', data).then(() => {
+        message.success('创建成功')
+      })
     }
     p.then(() => {
       this.props.history.push('/question/list')
