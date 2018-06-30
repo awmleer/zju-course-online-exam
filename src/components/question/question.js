@@ -10,23 +10,19 @@ export class Question extends Component {
     this.state = {
       question: {
         description:'',
-        question_type:'判断题',
-        knowledge_points:'',
-        options:[{id:1,content:'选项一'},{id:2,content:'选项二'}],
+        type:'判断题',
+        keypoints:'',
+        options:[],
         correct_option_id:0
       }
     }
-    console.log(props)
+
   }
 
   handleSubmit = (e) =>{
 
   }
-  handleChange = (name,value) =>{
-    this.setState({
-      [name]: value
-    })
-  }
+
   render(){
     return (
       <div>
