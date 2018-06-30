@@ -8,10 +8,6 @@ import {Question} from '../question/question'
 
 export class Routes extends Component {
 
-  // QuestionPage = ({ match }) => (
-  //   <Question id={match.params.id} create/>
-  // );
-
   render(){
     return (
       <Switch>

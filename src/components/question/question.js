@@ -5,14 +5,16 @@ import {withRouter} from 'react-router-dom'
 
 
 export class C extends Component {
+  questionId
+
   constructor(props){
     super(props)
-    let questionId = this.props.match.params.id
+    this.questionId = this.props.match.params.id
     this.state = {
       question: null,
     }
-    if(questionId){
-      api.get(`/question/${questionId}/`).then((data) => {
+    if(this.questionId){
+      api.get(`/question/${this.questionId}/`).then((data) => {
         this.setState({
           question: data
         })
@@ -22,7 +24,13 @@ export class C extends Component {
 
   handleOnSubmit = (data) =>{
     console.log(data)
-    api.post('/question/create/', data).then(() => {
+    let p
+    if (this.questionId) {
+      p = api.post(`/question/${this.questionId}/update/`, data)
+    }else{
+      p = api.post('/question/create/', data)
+    }
+    p.then(() => {
       this.props.history.push('/question/list')
     })
   }
