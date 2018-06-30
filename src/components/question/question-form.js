@@ -18,29 +18,29 @@ class RawForm extends Component {
   remove = (option) => {
     const { form } = this.props;
     // can use data-binding to get
-    const option_id = form.getFieldValue('option_id');
+    const optionId = form.getFieldValue('optionId');
     // We need at least one option
-    if (option_id.length === 0) {
+    if (optionId.length === 0) {
       return;
     }
 
     // can use data-binding to set
     form.setFieldsValue({
-      option_id: option_id.filter(key => key !== option),
+      optionId: optionId.filter(key => key !== option),
     });
   }
 
   add = () => {
     const { form } = this.props;
     // can use data-binding to get
-    const option_id = form.getFieldValue('option_id');
-    const nextOption = option_id.concat(uuid);
+    const optionId = form.getFieldValue('optionId');
+    const nextOption = optionId.concat(uuid);
     // console.log(nextOption)
     uuid++;
     // can use data-binding to set
     // important! notify form to detect changes
     form.setFieldsValue({
-      option_id: nextOption,
+      optionId: nextOption,
     });
   }
 
@@ -49,10 +49,29 @@ class RawForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log(values)
+        const data = this.transferData()
       }
     });
   }
-  
+
+  transferData=()=>{
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        const data={
+          type:values.type,
+          description:values.description,
+          keypoints:values.keypoints,
+          options:values.optionContent,
+          solution:values.optionContent[values.correctOptionId]
+        }
+        // console.log(values.correctOptionId)
+        // console.log(data)
+        return data
+      }
+    });
+  }
+
+
   render(){
     const { getFieldDecorator,getFieldValue } = this.props.form;
     const formItemLayoutWithOutLabel = {
@@ -61,9 +80,9 @@ class RawForm extends Component {
         sm: { span: 20, offset: 4 },
       },
     }
-    getFieldDecorator('option_id', { initialValue: [] });
-    const option_id = getFieldValue('option_id');
-    const formItems = option_id.map((option, index) => {
+    getFieldDecorator('optionId', { initialValue: [] });
+    const optionId = getFieldValue('optionId');
+    const formItems = optionId.map((option, index) => {
       return (
         <Form.Item
           {...formItemLayout}
@@ -71,7 +90,7 @@ class RawForm extends Component {
           required={false}
           key={option}
         >
-          {getFieldDecorator(`option_content[${option}]`, {
+          {getFieldDecorator(`optionContent[${option}]`, {
             validateTrigger: ['onChange', 'onBlur'],
             rules: [{
               required: true,
@@ -81,11 +100,11 @@ class RawForm extends Component {
           })(
             <Input placeholder="选项内容" style={{ width: '60%', marginRight: 8 }} />
           )}
-          {option_id.length > 0 ? (
+          {optionId.length > 0 ? (
             <Icon
               className="dynamic-delete-button"
               type="minus-circle-o"
-              disabled={option_id.length === 0}
+              disabled={optionId.length === 0}
               onClick={() => this.remove(option)}
             />
           ) : null}
@@ -93,8 +112,8 @@ class RawForm extends Component {
       )
     })
     // const option_index_list=null
-    console.log(option_id)
-    const option_index_list=option_id.map((option,index)=>{
+    // console.log(optionId)
+    const option_index_list=optionId.map((option,index)=>{
       return(
         <Option key={option} value={option}>{option_index[index]}</Option>
       )
@@ -126,7 +145,7 @@ class RawForm extends Component {
           </Button>
         </Form.Item>
         <Form.Item {...formItemLayout} label={'正确选项'}>
-          {getFieldDecorator('correct_id')(
+          {getFieldDecorator('correctOptionId')(
             <Select>
               {option_index_list}
             </Select>
