@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import {Item, ItemList} from '../item-list/item-list'
 import {Button} from 'antd'
 import * as api from '../../api'
+import {withRouter} from 'react-router-dom'
 
-export class QuestionGroupList extends Component {
+
+export class C extends Component {
 
   constructor(props){
     super(props)
@@ -39,7 +41,7 @@ export class QuestionGroupList extends Component {
     const groupItems = this.state.groups.map((group) => {
       return (
         <Item key={group.id.toString()} title={group.name}>
-          <Button type='default'>编辑</Button>
+          <Button type='default' onClick={console.log(this.props.history)}>编辑</Button>
           <Button type='danger'>删除</Button>
         </Item>
       )
@@ -54,3 +56,5 @@ export class QuestionGroupList extends Component {
     )
   }
 }
+
+export const QuestionGroupList = withRouter(C)
