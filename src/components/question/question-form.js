@@ -48,6 +48,7 @@ class RawForm extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        console.log(values)
         const data={
           type:values.type,
           description:values.description,
@@ -151,13 +152,41 @@ class RawForm extends Component {
 
 export const QuestionForm = Form.create({
   mapPropsToFields(props) {
-    let fieldObj = {}
-    if(props.question){
-      for(let key of Object.keys(props.question)){
-        fieldObj[key] = Form.createFormField({
-          value: props.question[key],
-        })
-      }
+    // console.log(props)
+    const question = props.question
+    console.log(question)
+    let fieldObj={}
+    if(question!=null){
+    fieldObj.keypoints= Form.createFormField({
+      value:question.keypoints
+    })
+    fieldObj.description = Form.createFormField({
+      value:question.description
+    })
+    fieldObj.type = Form.createFormField({
+      value:question.type
+    })
+    fieldObj.optionContent =question.options.map((option,index)=>{
+      return Form.createFormField({
+        value:option.content
+      })
+    })
+      
+    fieldObj.optionId=Form.createFormField({
+      value:question.options.map((option,index)=>{
+        return index
+      })
+    })
+    fieldObj.correctOptionId = Form.createFormField({
+      value:option_index.indexOf(question.solution)
+    })
+      console.log(fieldObj)
+    // for(let key of Object.keys(props.question)){
+    //   fieldObj[key] = Form.createFormField({
+    //     value: props.question[key],
+    //   })
+    // }
+
     }
     return fieldObj
   },
