@@ -4,6 +4,7 @@ import './question-list.scss'
 import {Button} from 'antd'
 import * as api from '../../api'
 import {Link} from 'react-router-dom'
+import message from 'antd/es/message/index'
 
 export class QuestionList extends Component {
   constructor(props){
@@ -29,6 +30,7 @@ export class QuestionList extends Component {
   deleteQuestion = (questionId)=>{
     return ()=>{
       api.get(`/question/${questionId}/delete/`).then(() => {
+        message.success('删除成功')
         this.fetchQuestionList()
       })
     }
