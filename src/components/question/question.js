@@ -9,7 +9,7 @@ export class Question extends Component {
     super(props)
     this.state = {
       question: {
-        description:'1',
+        description:'',
         question_type:'判断题',
         knowledge_points:'',
         options:[{id:1,content:'选项一'},{id:2,content:'选项二'}],
