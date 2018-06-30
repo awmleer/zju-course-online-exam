@@ -18,29 +18,29 @@ class RawForm extends Component {
   remove = (option) => {
     const { form } = this.props;
     // can use data-binding to get
-    const options = form.getFieldValue('options');
+    const option_id = form.getFieldValue('option_id');
     // We need at least one option
-    if (options.length === 0) {
+    if (option_id.length === 0) {
       return;
     }
 
     // can use data-binding to set
     form.setFieldsValue({
-      options: options.filter(key => key !== option),
+      option_id: option_id.filter(key => key !== option),
     });
   }
 
   add = () => {
     const { form } = this.props;
     // can use data-binding to get
-    const options = form.getFieldValue('options');
-    const nextOption = options.concat(uuid);
+    const option_id = form.getFieldValue('option_id');
+    const nextOption = option_id.concat(uuid);
     // console.log(nextOption)
     uuid++;
     // can use data-binding to set
     // important! notify form to detect changes
     form.setFieldsValue({
-      options: nextOption,
+      option_id: nextOption,
     });
   }
 
@@ -61,9 +61,9 @@ class RawForm extends Component {
         sm: { span: 20, offset: 4 },
       },
     }
-    getFieldDecorator('options', { initialValue: [] });
-    const options = getFieldValue('options');
-    const formItems = options.map((option, index) => {
+    getFieldDecorator('option_id', { initialValue: [] });
+    const option_id = getFieldValue('option_id');
+    const formItems = option_id.map((option, index) => {
       return (
         <Form.Item
           {...formItemLayout}
@@ -81,11 +81,11 @@ class RawForm extends Component {
           })(
             <Input placeholder="选项内容" style={{ width: '60%', marginRight: 8 }} />
           )}
-          {options.length > 0 ? (
+          {option_id.length > 0 ? (
             <Icon
               className="dynamic-delete-button"
               type="minus-circle-o"
-              disabled={options.length === 0}
+              disabled={option_id.length === 0}
               onClick={() => this.remove(option)}
             />
           ) : null}
@@ -93,10 +93,10 @@ class RawForm extends Component {
       )
     })
     // const option_index_list=null
-    console.log(options)
-    const option_index_list=options.map((option,index)=>{
+    console.log(option_id)
+    const option_index_list=option_id.map((option,index)=>{
       return(
-        <Option value={option}>{option_index[index]}</Option>
+        <Option key={option} value={option}>{option_index[index]}</Option>
       )
     })
     return (

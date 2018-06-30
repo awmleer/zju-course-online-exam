@@ -12,7 +12,7 @@ export class Question extends Component {
         description:'',
         type:'判断题',
         keypoints:'',
-        options:[],
+        option_id:[],
         correct_option_id:0
       }
     }
