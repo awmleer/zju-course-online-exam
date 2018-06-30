@@ -152,10 +152,12 @@ class RawForm extends Component {
 export const QuestionForm = Form.create({
   mapPropsToFields(props) {
     let fieldObj = {}
-    for(let key of Object.keys(props.question)){
-      fieldObj[key] = Form.createFormField({
-        value: props.question[key],
-      })
+    if(props.question){
+      for(let key of Object.keys(props.question)){
+        fieldObj[key] = Form.createFormField({
+          value: props.question[key],
+        })
+      }
     }
     return fieldObj
   },

@@ -28,7 +28,9 @@ export class QuestionList extends Component {
     const questionItems = this.state.questions.map((question) => {
       return (
         <Item key={question.id.toString()} title={question.description}>
-          <Button type='default'>编辑</Button>
+          <Link to={'/question/'+question.id}>
+            <Button type='default'>编辑</Button>
+          </Link>
           <Button type='danger'>删除</Button>
         </Item>
       )

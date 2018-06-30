@@ -1,22 +1,23 @@
 import React, { Component } from 'react'
-import {Form,Select,AutoComplete,Button,Input,List} from 'antd'
 import * as api from '../../api'
 import {QuestionForm} from './question-form'
+import {withRouter} from 'react-router-dom'
 
 
-export class Question extends Component {
+export class C extends Component {
   constructor(props){
     super(props)
+    let questionId = this.props.match.params.id
     this.state = {
-      question: {
-        description:'',
-        type:'判断题',
-        keypoints:'',
-        option_id:[],
-        correct_option_id:0
-      }
+      question: null,
     }
-
+    if(questionId){
+      api.get(`/question/${questionId}`).then((data) => {
+        this.setState({
+          question: data
+        })
+      })
+    }
   }
 
   handleOnSubmit = (data) =>{
@@ -27,6 +28,19 @@ export class Question extends Component {
   }
 
   render(){
+    // if(this.state.question === null){
+    //   return (
+    //     <div>
+    //       加载中
+    //     </div>
+    //   )
+    // }else{
+    //   return (
+    //     <div>
+    //       <QuestionForm question={this.state.question} onSubmit={this.handleOnSubmit}/>
+    //     </div>
+    //   )
+    // }
     return (
       <div>
         <QuestionForm question={this.state.question} onSubmit={this.handleOnSubmit}/>
@@ -34,3 +48,6 @@ export class Question extends Component {
     )
   }
 }
+
+
+export const Question = withRouter(C)
