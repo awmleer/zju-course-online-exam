@@ -22,8 +22,11 @@ export class C extends Component {
     }
     if(this.id){
       api.get(`/question/group/${this.id}/`).then((data) => {
-        this.state.name=data.name
-        this.state.questionList=data.questions
+        this.setState({
+          name:data.name,
+          questionList:data.questions
+        })
+
         console.log(data)
         console.log(this.state.questionList)
       })
@@ -60,7 +63,14 @@ export class C extends Component {
 
   addQuestion=()=>{
     // console.log(this.state.questionEntryBuffer)
-    const temp=this.state.questionList.concat(this.state.questionEntryBuffer)
+
+    let  temp=this.state.questionList
+    let question_buffer=null
+    for (question_buffer in this.state.questionEntryBuffer){
+      if(temp.indexOf(question_buffer)==-1){
+        temp.push(question_buffer)
+      }
+    }
     console.log(temp)
     this.setState({
       questionList:temp,
@@ -70,7 +80,7 @@ export class C extends Component {
     console.log(this.state.questionList)
   }
 
-  addQuestionGroup=()=>{
+  addQuestionGroup=(e)=>{
     if(this.state.questionGroupBuffer!=null){
       api.get(`/question/group/${this.state.questionGroupBuffer.id}`).then((data) => {
         const temp=this.state.questionList.concat(data.questions)
@@ -97,8 +107,8 @@ export class C extends Component {
           类型：{question.type}  描述：{question.description}
           <Button type={"danger"} onClick={(e)=>{
             const index=this.state.questionList.indexOf(question)
-            console.log(index)
-            console.log(this.state.questionList)
+            // console.log(index)
+            // console.log(this.state.questionList)
             this.state.questionList.splice(index,1)
             this.setState({
               questionList:this.state.questionList
@@ -111,8 +121,10 @@ export class C extends Component {
       return(
         <Checkbox onChange={(e)=>{
           if(e.target.checked){
-          this.state.questionEntryBuffer.push(questionEntry)}
-
+            this.state.questionEntryBuffer.push(questionEntry)}
+          else{
+            this.state.questionEntryBuffer.splice(this.state.questionEntryBuffer.indexOf(questionEntry))
+          }
         }} value={questionEntry} key={questionEntry.id}>
           {/*{console.log(questionEntry)}*/}
           <p>类型：{questionEntry.type}  描述：{questionEntry.description}</p>
@@ -149,7 +161,7 @@ export class C extends Component {
               <Icon type="plus" /> 添加题目组
             </Button>
           </Form.Item>
-          <Modal title='添加题目组' visible={this.state.questionGroupListVisible} onOk={this.addQuestionGroup} onCancel={this.handleCancel} >
+          <Modal title='添加题目组' visible={this.state.questionGroupListVisible} onOk={(e)=>this.addQuestionGroup(e)} onCancel={this.handleCancel} >
             {questionGroupList}
           </Modal>
           <Form.Item {...formItemLayoutWithoutLabel}>
