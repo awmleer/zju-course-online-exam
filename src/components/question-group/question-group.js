@@ -23,8 +23,11 @@ export class C extends Component {
     }
     if(this.id){
       api.get(`/question/group/${this.id}/`).then((data) => {
-        this.state.name=data.name
-        this.state.questionList=data.questions
+        this.setState({
+          name:data.name,
+          questionList:data.questions
+        })
+
         console.log(data)
         console.log(this.state.questionList)
       })
@@ -61,22 +64,34 @@ export class C extends Component {
 
   addQuestion=()=>{
     // console.log(this.state.questionEntryBuffer)
-    const temp=this.state.questionList.concat(this.state.questionEntryBuffer)
-    console.log(temp)
+    console.log(this.state.questionEntryBuffer)
+    for(let q of this.state.questionEntryBuffer){
+      let flag = true
+      for(let qq of this.state.questionList){
+        if(qq.id===q.id)flag=false
+      }
+      if(flag)this.state.questionList.push(q)
+    }
     this.setState({
-      questionList:temp,
+      questionList:this.state.questionList,
       questionEntryBuffer:[],
       questionEntryListVisible:false
     })
     console.log(this.state.questionList)
   }
 
-  addQuestionGroup=()=>{
+  addQuestionGroup=(e)=>{
     if(this.state.questionGroupBuffer!=null){
       api.get(`/question/group/${this.state.questionGroupBuffer.id}`).then((data) => {
-        const temp=this.state.questionList.concat(data.questions)
+        for(let q of data.questions){
+          let flag = true
+          for(let qq of this.state.questionList){
+            if(qq.id===q.id)flag=false
+          }
+          if(flag)this.state.questionList.push(q)
+        }
         this.setState({
-          questionList:temp,
+          questionList:this.state.questionList,
           questionGroupBuffer:null,
           questionGroupListVisible:false
         })
@@ -99,8 +114,8 @@ export class C extends Component {
           <span className='description'>{question.description}</span>
           <Button type={"danger"} onClick={(e)=>{
             const index=this.state.questionList.indexOf(question)
-            console.log(index)
-            console.log(this.state.questionList)
+            // console.log(index)
+            // console.log(this.state.questionList)
             this.state.questionList.splice(index,1)
             this.setState({
               questionList:this.state.questionList
@@ -113,8 +128,10 @@ export class C extends Component {
       return(
         <Checkbox onChange={(e)=>{
           if(e.target.checked){
-          this.state.questionEntryBuffer.push(questionEntry)}
-
+            this.state.questionEntryBuffer.push(questionEntry)}
+          else{
+            this.state.questionEntryBuffer.splice(this.state.questionEntryBuffer.indexOf(questionEntry))
+          }
         }} value={questionEntry} key={questionEntry.id}>
           {/*{console.log(questionEntry)}*/}
           <span>类型：{questionEntry.type}  描述：{questionEntry.description}</span>
@@ -153,7 +170,7 @@ export class C extends Component {
               <Icon type="plus" /> 添加题目组
             </Button>
           </Form.Item>
-          <Modal title='添加题目组' visible={this.state.questionGroupListVisible} onOk={this.addQuestionGroup} onCancel={this.handleCancel} >
+          <Modal title='添加题目组' visible={this.state.questionGroupListVisible} onOk={(e)=>this.addQuestionGroup(e)} onCancel={this.handleCancel} >
             {questionGroupList}
           </Modal>
           <Form.Item {...formItemLayoutWithoutLabel}>
