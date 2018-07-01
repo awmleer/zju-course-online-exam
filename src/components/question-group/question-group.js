@@ -17,6 +17,12 @@ export class C extends Component {
         //TODO set state
       })
     }
+    api.get(`/question/list/`).then((data) => {
+      //TODO data is QuestionEntry[]
+    })
+    api.get(`/question/group/list/`).then((data) => {
+      //TODO data is QuestionGroupEntry[]
+    })
   }
 
   submit = (data) =>{
