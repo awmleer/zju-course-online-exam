@@ -21,3 +21,6 @@ export function get(url){
 export function post(url, data) {
   return handleResponse(axios.post(apiUrl+url, data))
 }
+
+
+export var user = null

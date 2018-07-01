@@ -11,4 +11,4 @@ export class C extends Component {
 
 }
 
-export const QuestionGroup = withRouter(C)
+export const Exam = withRouter(C)
