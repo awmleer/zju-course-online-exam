@@ -3,6 +3,7 @@ import * as api from '../../api'
 import {withRouter} from 'react-router-dom'
 import {formItemLayoutWithLabel, formItemLayoutWithoutLabel} from '../../form'
 import {
+  TimePicker,
   Radio,
   Checkbox,
   Modal,
@@ -24,14 +25,20 @@ export class C extends Component {
     super(props)
     this.state = {
       exam: null,
-      choices: []
+      choices: [],
+      time:null,
+      hours:9999,
+      minutes:9999,
+      seconds:9999,
     }
     api.get(`/exam/${this.props.match.params.id}/participate/`).then((data) => {
       console.log(data)
       this.setState({
-        exam: data
+        exam: data,
+        time:(data.availableEndTime-data.availableStartTime)
       })
     })
+
   }
 
   submit = () => {
@@ -40,7 +47,26 @@ export class C extends Component {
       console.log(data)
     })
   }
+  tick = () => {
+    console.log(this.state.time)
+    let date=new Date(this.state.time)
+    this.setState({
+      time: this.state.time - 1000,
+      hours:date.getHours(),
+      minutes:date.getMinutes(),
+      seconds:date.getSeconds(),
+    })
+    if(this.state.hours===0 && this.state.minutes===0 && this.state.seconds===0){
+      this.submit()
+    }
+  }
+  componentDidMount() {
+    this.interval = setInterval(() => this.tick(), 1000);
+  }
 
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
   render(){
     if(this.state.exam){
       const questionItems = this.state.exam.questions.map((question, index) => {
@@ -71,6 +97,8 @@ export class C extends Component {
       })
       return (
         <div>
+          <div>剩余时间:{this.state.hours+':'+this.state.minutes+':'+this.state.seconds}</div>
+          <br/>
           <ol>
             {questionItems}
           </ol>
