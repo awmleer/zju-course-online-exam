@@ -14,7 +14,6 @@ class App extends Component {
   constructor(props){
     super(props)
     api.get(`/account/profile`).then((data) => {
-      console.log(data)
       this.setState({
         user: data
       })
@@ -67,13 +66,13 @@ class App extends Component {
               {
                 this.state.user && this.state.user.type === 'teacher' &&
                 <Menu.Item key="exam-list">
-                  <Link to='/exam/list' type='teacher'>考试管理</Link>
+                  <Link to='/exam/list/teacher'>考试管理</Link>
                 </Menu.Item>
               }
               {
                 this.state.user && this.state.user.type === 'student' &&
                 <Menu.Item key="exam-list">
-                  <Link to='/exam/list' type='student'>考试列表</Link>
+                  <Link to='/exam/list/student'>考试列表</Link>
                 </Menu.Item>
               }
             </SubMenu>

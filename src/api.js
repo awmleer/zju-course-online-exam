@@ -21,3 +21,4 @@ export function get(url){
 export function post(url, data) {
   return handleResponse(axios.post(apiUrl+url, data))
 }
+

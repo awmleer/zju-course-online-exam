@@ -52,7 +52,7 @@ export class C extends Component {
     return (
       <div>
         {
-          this.props.type === 'teacher' &&
+          this.props.match.params.type === 'teacher' &&
           <Link to="/exam/create">
             <Button type='primary'>创建考试</Button>
           </Link>
