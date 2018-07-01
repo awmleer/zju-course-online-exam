@@ -1,60 +1,52 @@
 import React, { Component } from 'react'
 import * as api from '../../api'
 import {withRouter} from 'react-router-dom'
-import {message} from 'antd'
+import {formItemLayoutWithLabel, formItemLayoutWithoutLabel} from '../../form'
+import {message, Form, Select, AutoComplete, Button, Input, List, Icon} from 'antd'
+
 
 export class C extends Component {
-  questionId
+  id = null
 
   constructor(props){
     super(props)
-    this.questionId = this.props.match.params.id
-    this.state = {
-      question: null,
-    }
-    if(this.questionId){
-      api.get(`/question/${this.questionId}/`).then((data) => {
-        this.setState({
-          question: data
-        })
+    this.id = this.props.match.params.id
+    this.state = {}//TODO initial state
+    if(this.id){
+      api.get(`/question/group/${this.id}/`).then((data) => {
+        //TODO set state
       })
     }
   }
 
-  handleOnSubmit = (data) =>{
+  submit = (data) =>{
     console.log(data)
     let p
-    if (this.questionId) {
-      p = api.post(`/question/${this.questionId}/update/`, data).then(() => {
+    if (this.id) {
+      p = api.post(`/question/group/${this.id}/update/`, data).then(() => {
         message.success('修改成功')
       })
     }else{
-      p = api.post('/question/create/', data).then(() => {
+      p = api.post('/question/group/create/', data).then(() => {
         message.success('创建成功')
       })
     }
     p.then(() => {
-      this.props.history.push('/question/list')
+      this.props.history.push('/question/group/list')
     })
   }
 
   render(){
-    // if(this.state.question === null){
-    //   return (
-    //     <div>
-    //       加载中
-    //     </div>
-    //   )
-    // }else{
-    //   return (
-    //     <div>
-    //       <QuestionForm question={this.state.question} onSubmit={this.handleOnSubmit}/>
-    //     </div>
-    //   )
-    // }
     return (
       <div>
-        {/*<QuestionForm question={this.state.question} onSubmit={this.handleOnSubmit}/>*/}
+        <Form>
+          <Form.Item {...formItemLayoutWithLabel} label='题目描述'>
+            <Input/>
+          </Form.Item>
+          <Form.Item {...formItemLayoutWithoutLabel}>
+            <Button type="primary" onClick={this.submit}>提交</Button>
+          </Form.Item>
+        </Form>
       </div>
     )
   }
