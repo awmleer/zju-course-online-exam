@@ -97,7 +97,8 @@ export class C extends Component {
       })
       return (
         <div>
-          <div>剩余时间:{this.state.hours+':'+this.state.minutes+':'+this.state.seconds}<br/></div>
+          <div>剩余时间:{this.state.hours+':'+this.state.minutes+':'+this.state.seconds}</div>
+          <br/>
           <ol>
             {questionItems}
           </ol>
