@@ -53,10 +53,14 @@ export class C extends Component {
             <Button type='danger' onClick={this.delete(exam.id)}>删除</Button>
           }
           {
-            this.props.match.params.type === 'student' &&
+            this.props.match.params.type === 'student' && exam.participated===false &&
             <Link to={'/exam/'+exam.id+'/participate'}>
               <Button type='primary'>参加</Button>
             </Link>
+          }
+          {
+            this.props.match.params.type === 'student' && exam.participated===true &&
+            <span>得分：{exam.score}</span>
           }
         </Item>
       )
