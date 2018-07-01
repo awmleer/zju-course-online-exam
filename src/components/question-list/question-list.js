@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import {Item, ItemList} from '../item-list/item-list'
 import './question-list.scss'
-import {Button} from 'antd'
+import {Button, message} from 'antd'
 import * as api from '../../api'
 import {Link} from 'react-router-dom'
-import message from 'antd/es/message/index'
 
 export class QuestionList extends Component {
   constructor(props){

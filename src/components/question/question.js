@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import * as api from '../../api'
 import {QuestionForm} from './question-form'
 import {withRouter} from 'react-router-dom'
-import message from 'antd/es/message/index'
-
+import {message} from 'antd'
 
 export class C extends Component {
   questionId
