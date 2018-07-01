@@ -7,13 +7,11 @@ import {Radio,Checkbox,Modal,message, Form, Select, AutoComplete, Button, Input,
 
 export class C extends Component {
   id = null
-
   constructor(props){
     super(props)
     this.id = this.props.match.params.id
     this.state = {
       name:'',
-      description:'',
       questionList:[],
       questionEntryList:[],
       questionEntryBuffer:[],
@@ -24,7 +22,10 @@ export class C extends Component {
     }
     if(this.id){
       api.get(`/question/group/${this.id}/`).then((data) => {
-        //TODO set state
+        this.state.name=data.name
+        this.state.questionList=data.questions
+        console.log(data)
+        console.log(this.state.questionList)
       })
     }
     api.get(`/question/list/`).then((data) => {
@@ -36,7 +37,12 @@ export class C extends Component {
   }
 
   submit = () =>{
-    //TODO data
+    const data={
+      name:this.state.name,
+      questionIds:this.state.questionList.map((question,index)=>{
+        return question.id
+      })
+    }
     let p
     if (this.id) {
       p = api.post(`/question/group/${this.id}/update/`, data).then(() => {
@@ -105,7 +111,7 @@ export class C extends Component {
       return(
         <Checkbox onChange={(e)=>{
           if(e.target.checked){
-          this.state.questionEntryBuffer=e.target.value}
+          this.state.questionEntryBuffer.push(questionEntry)}
 
         }} value={questionEntry} key={questionEntry.id}>
           {/*{console.log(questionEntry)}*/}
@@ -116,7 +122,7 @@ export class C extends Component {
     const questionGroupList = this.state.questionGroupList.map((questionGroup,index)=>{
       return(
         <Radio onChange={(e)=>{
-          this.state.questionGroupBuffer=e.target.value
+          this.state.questionGroupBuffer=questionGroup
         }} value={questionGroup} key={questionGroup.id}>
           {questionGroup.name}
         </Radio>
@@ -127,10 +133,6 @@ export class C extends Component {
         <Form>
           <Form.Item {...formItemLayoutWithLabel} label='题目组名称'>
             <Input placeholder='请输入题目组名称' onChange={(e)=>{this.setState({name:e.target.value})}} value={this.state.name}/>
-            {/*{console.log(this.state.name)}*/}
-          </Form.Item>
-          <Form.Item {...formItemLayoutWithLabel} label='描述'>
-            <Input placeholder='请输入对这个题目组的描述' onChange={(e)=>{this.setState({description:e.target.value})}} value={this.state.description}/>
             {/*{console.log(this.state.name)}*/}
           </Form.Item>
           {questionList}
