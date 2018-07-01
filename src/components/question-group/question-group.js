@@ -35,8 +35,8 @@ export class C extends Component {
     })
   }
 
-  submit = (data) =>{
-    console.log(data)
+  submit = () =>{
+    //TODO data
     let p
     if (this.id) {
       p = api.post(`/question/group/${this.id}/update/`, data).then(() => {

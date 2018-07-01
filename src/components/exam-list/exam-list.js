@@ -51,9 +51,12 @@ export class C extends Component {
     })
     return (
       <div>
-        <Link to="/exam/create">
-          <Button type='primary'>创建考试</Button>
-        </Link>
+        {
+          this.props.type === 'teacher' &&
+          <Link to="/exam/create">
+            <Button type='primary'>创建考试</Button>
+          </Link>
+        }
         <ItemList>
           {examItems}
         </ItemList>

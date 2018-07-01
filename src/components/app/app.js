@@ -67,7 +67,7 @@ class App extends Component {
               {
                 this.state.user && this.state.user.type === 'teacher' &&
                 <Menu.Item key="exam-list">
-                  <Link to='/exam/list'>考试管理</Link>
+                  <Link to='/exam/list' type='teacher'>考试管理</Link>
                 </Menu.Item>
               }
               {
