@@ -5,7 +5,7 @@ const apiUrl = 'http://192.168.0.8:8000'
 
 function handleResponse(p){
   return p.then(function (response) {
-    console.log(response);
+    // console.log(response);
     return response.data
   }).catch(function (error) {
     throw error

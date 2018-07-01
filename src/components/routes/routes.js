@@ -7,6 +7,7 @@ import {Question} from '../question/question'
 import {QuestionGroup} from '../question-group/question-group'
 import {ExamList} from '../exam-list/exam-list'
 import {Exam} from '../exam/exam'
+import {ExamParticipate} from '../exam-participate/exam-participate'
 
 
 export class Routes extends Component {
@@ -24,6 +25,7 @@ export class Routes extends Component {
         <Route path='/question/:id(\d+)' component={Question}/>
         <Route path='/question/create' component={Question}/>
         <Route path='/exam/list/:type' component={ExamList}/>
+        <Route path='/exam/:id(\d+)/participate' component={ExamParticipate}/>
         <Route path='/exam/:id(\d+)' component={Exam}/>
         <Route path='/exam/create' component={Exam}/>
       </Switch>
