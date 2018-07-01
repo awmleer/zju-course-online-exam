@@ -43,6 +43,9 @@ export class C extends Component {
 
   submit = () => {
     console.log(this.state.choices)
+    api.post(`/exam/${this.props.match.params.id}/submit/`,this.state.choices).then((data) => {
+      console.log(data)
+    })
   }
   tick = () => {
     console.log(this.state.time)
