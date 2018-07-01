@@ -5,6 +5,7 @@ import {Switch, Route} from 'react-router-dom'
 import {QuestionGroupList} from '../question-group-list/question-group-list'
 import {Question} from '../question/question'
 import {QuestionGroup} from '../question-group/question-group'
+import {ExamList} from '../exam-list/exam-list'
 
 
 export class Routes extends Component {
@@ -20,7 +21,7 @@ export class Routes extends Component {
         <Route path='/question/list' component={QuestionList}/>
         <Route path='/question/:id(\d+)' component={Question}/>
         <Route path='/question/create' component={Question}/>
-
+        <Route path='/exam/list' component={ExamList}/>
       </Switch>
     )
   }

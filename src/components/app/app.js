@@ -32,7 +32,9 @@ class App extends Component {
               <Menu.Item key="question-group-list">
                 <Link to='/question-group/list'>题目组管理</Link>
               </Menu.Item>
-              <Menu.Item key="2">考试管理</Menu.Item>
+              <Menu.Item key="2">
+                <Link to='/exam/list'>考试管理</Link>
+              </Menu.Item>
             </SubMenu>
             <Menu.Item key="3">
               <Icon type="user" />
