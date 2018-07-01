@@ -3,6 +3,8 @@ import {Item, ItemList} from '../item-list/item-list'
 import {Button} from 'antd'
 import * as api from '../../api'
 import {withRouter} from 'react-router-dom'
+import {Link} from 'react-router-dom'
+import {message} from 'antd/lib/index'
 
 
 export class C extends Component {
@@ -10,13 +12,15 @@ export class C extends Component {
   constructor(props){
     super(props)
     this.state = {
-      groups: [
-        {id: 1, name: 'test'},
-      ]
+      groups: []
     }
   }
 
   componentDidMount() {
+    this.fetchList()
+  }
+
+  fetchList = ()=>{
     api.get('/question/group/list/').then((data) => {
       console.log(data)
       this.setState({
@@ -25,30 +29,31 @@ export class C extends Component {
     })
   }
 
-  test = ()=>{
-    this.setState(prevState => ({
-      groups: [
-        {id: 1, name: 'test'},
-        {id: 2, name: 'test'},
-        {id: 3, name: 'test'},
-      ]
-    }))
+  delete = (id)=>{
+    return ()=>{
+      api.get(`/question/group/${id}/delete/`).then(() => {
+        message.success('删除成功')
+        this.fetchList()
+      })
+    }
   }
-
-
 
   render(){
     const groupItems = this.state.groups.map((group) => {
       return (
         <Item key={group.id.toString()} title={group.name}>
-          <Button type='default' onClick={console.log(this.props.history)}>编辑</Button>
-          <Button type='danger'>删除</Button>
+          <Link to={'/question-group/'+group.id}>
+            <Button type='default'>编辑</Button>
+          </Link>
+          <Button type='danger' onClick={this.delete(group.id)}>删除</Button>
         </Item>
       )
     })
     return (
       <div>
-        <Button type='primary' onClick={this.test}>创建题目组</Button>
+        <Link to="/question-group/create">
+          <Button type='primary'>创建题目组</Button>
+        </Link>
         <ItemList>
           {groupItems}
         </ItemList>

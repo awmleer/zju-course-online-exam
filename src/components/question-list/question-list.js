@@ -14,10 +14,10 @@ export class QuestionList extends Component {
   }
 
   componentDidMount() {
-    this.fetchQuestionList()
+    this.fetchList()
   }
 
-  fetchQuestionList = ()=>{
+  fetchList = ()=>{
     api.get('/question/list/').then((data) => {
       console.log(data)
       this.setState({
@@ -26,11 +26,11 @@ export class QuestionList extends Component {
     })
   }
 
-  deleteQuestion = (questionId)=>{
+  delete = (questionId)=>{
     return ()=>{
       api.get(`/question/${questionId}/delete/`).then(() => {
         message.success('删除成功')
-        this.fetchQuestionList()
+        this.fetchList()
       })
     }
   }
@@ -42,7 +42,7 @@ export class QuestionList extends Component {
           <Link to={'/question/'+question.id}>
             <Button type='default'>编辑</Button>
           </Link>
-          <Button type='danger' onClick={this.deleteQuestion(question.id)}>删除</Button>
+          <Button type='danger' onClick={this.delete(question.id)}>删除</Button>
         </Item>
       )
     })
