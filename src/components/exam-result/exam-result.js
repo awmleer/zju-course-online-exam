@@ -42,9 +42,15 @@ export class C extends Component {
   render(){
     if(this.state.exam){
       const participationItems = this.state.participations.map((p, index) => {
-        const answerItems = p.answer.map((a, index) => {
+        const answerItems = p.answer.map((a, i) => {
+          let color
+          if(a===this.state.exam.questions[i].solution){
+            color = 'green'
+          }else{
+            color = 'red'
+          }
           return (
-            <Tag key={index}>{a}</Tag>
+            <Tag key={i} color={color}>{a}</Tag>
           )
         })
         return (
