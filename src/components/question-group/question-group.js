@@ -64,17 +64,16 @@ export class C extends Component {
 
   addQuestion=()=>{
     // console.log(this.state.questionEntryBuffer)
-
-    let  temp=this.state.questionList
-    let question_buffer=null
-    for (question_buffer in this.state.questionEntryBuffer){
-      if(temp.indexOf(question_buffer)==-1){
-        temp.push(question_buffer)
+    console.log(this.state.questionEntryBuffer)
+    for(let q of this.state.questionEntryBuffer){
+      let flag = true
+      for(let qq of this.state.questionList){
+        if(qq.id===q.id)flag=false
       }
+      if(flag)this.state.questionList.push(q)
     }
-    console.log(temp)
     this.setState({
-      questionList:temp,
+      questionList:this.state.questionList,
       questionEntryBuffer:[],
       questionEntryListVisible:false
     })
@@ -84,9 +83,15 @@ export class C extends Component {
   addQuestionGroup=(e)=>{
     if(this.state.questionGroupBuffer!=null){
       api.get(`/question/group/${this.state.questionGroupBuffer.id}`).then((data) => {
-        const temp=this.state.questionList.concat(data.questions)
+        for(let q of data.questions){
+          let flag = true
+          for(let qq of this.state.questionList){
+            if(qq.id===q.id)flag=false
+          }
+          if(flag)this.state.questionList.push(q)
+        }
         this.setState({
-          questionList:temp,
+          questionList:this.state.questionList,
           questionGroupBuffer:null,
           questionGroupListVisible:false
         })
