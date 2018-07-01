@@ -42,10 +42,22 @@ export class C extends Component {
     const examItems = this.state.exams.map((exam) => {
       return (
         <Item key={exam.id.toString()} title={exam.name}>
-          <Link to={'/exam/'+exam.id}>
-            <Button type='default'>编辑</Button>
-          </Link>
-          <Button type='danger' onClick={this.delete(exam.id)}>删除</Button>
+          {
+            this.props.match.params.type === 'teacher' &&
+            <Link to={'/exam/'+exam.id}>
+              <Button type='default'>编辑</Button>
+            </Link>
+          }
+          {
+            this.props.match.params.type === 'teacher' &&
+            <Button type='danger' onClick={this.delete(exam.id)}>删除</Button>
+          }
+          {
+            this.props.match.params.type === 'student' &&
+            <Link to={'/exam/'+exam.id+'/participate'}>
+              <Button type='primary'>参加</Button>
+            </Link>
+          }
         </Item>
       )
     })
