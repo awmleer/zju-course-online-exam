@@ -140,9 +140,7 @@ export class C extends Component {
     })
     const questionGroupList = this.state.questionGroupList.map((questionGroup,index)=>{
       return(
-        <Radio onChange={(e)=>{
-          this.state.questionGroupBuffer=questionGroup
-        }} value={questionGroup} key={questionGroup.id}>
+        <Radio  value={questionGroup} key={questionGroup.id}>
           {questionGroup.name}
         </Radio>
       )
@@ -171,7 +169,9 @@ export class C extends Component {
             </Button>
           </Form.Item>
           <Modal title='添加题目组' visible={this.state.questionGroupListVisible} onOk={(e)=>this.addQuestionGroup(e)} onCancel={this.handleCancel} >
+            <Radio.Group onChange={(e)=>{this.state.questionGroupBuffer=e.target.value}}>
             {questionGroupList}
+            </Radio.Group>
           </Modal>
           <Form.Item {...formItemLayoutWithoutLabel}>
             <Button type="primary" onClick={this.submit}>提交</Button>
