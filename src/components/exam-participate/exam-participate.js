@@ -45,6 +45,8 @@ export class C extends Component {
     console.log(this.state.choices)
     api.post(`/exam/${this.props.match.params.id}/submit/`,this.state.choices).then((data) => {
       console.log(data)
+      message.success('提交成功')
+      this.props.history.push('/exam/list')
     })
   }
   tick = () => {
