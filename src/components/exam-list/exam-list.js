@@ -44,6 +44,12 @@ export class C extends Component {
         <Item key={exam.id.toString()} title={exam.name}>
           {
             this.props.match.params.type === 'teacher' &&
+            <Link to={'/exam/'+exam.id+'/result'}>
+              <Button type='primary'>成绩单</Button>
+            </Link>
+          }
+          {
+            this.props.match.params.type === 'teacher' &&
             <Link to={'/exam/'+exam.id}>
               <Button type='default'>编辑</Button>
             </Link>
