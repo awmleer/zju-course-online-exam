@@ -25,8 +25,8 @@ export class Routes extends Component {
         <Route path='/question/:id(\d+)' component={Question}/>
         <Route path='/question/create' component={Question}/>
         <Route path='/exam/list/:type' component={ExamList}/>
-        <Route path='/exam/:id(\d+)' component={Exam}/>
         <Route path='/exam/:id(\d+)/participate' component={ExamParticipate}/>
+        <Route path='/exam/:id(\d+)' component={Exam}/>
         <Route path='/exam/create' component={Exam}/>
       </Switch>
     )

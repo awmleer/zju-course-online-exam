@@ -36,7 +36,7 @@ export class C extends Component {
             {/*{console.log(this.state.name)}*/}
           </Form.Item>
           <Form.Item {...formItemLayoutWithLabel} label='考试开始时间'>
-            <DatePicker onChange={onChange} />
+            <DatePicker/>
           </Form.Item>
           <Form.Item {...formItemLayoutWithoutLabel}>
             <Button type="primary" onClick={this.submit}>提交</Button>
