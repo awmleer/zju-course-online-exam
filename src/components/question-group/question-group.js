@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import * as api from '../../api'
 import {withRouter} from 'react-router-dom'
 import {formItemLayoutWithLabel, formItemLayoutWithoutLabel} from '../../form'
-import {Radio,Checkbox,Modal,message, Form, Select, AutoComplete, Button, Input, List, Icon} from 'antd'
+import {Radio, Checkbox, Modal, message, Form, Select, AutoComplete, Button, Input, List, Icon, Tag} from 'antd'
+import './question-group.scss'
 
 
 export class C extends Component {
@@ -103,8 +104,9 @@ export class C extends Component {
   render(){
     const questionList=this.state.questionList.map((question,index)=>{
       return(
-        <Form.Item label={'题目'+(index+1)} key={question.id}>
-          类型：{question.type}  描述：{question.description}
+        <div key={question.id} className='question-box'>
+          <Tag>{question.type}</Tag>
+          <span className='description'>{question.description}</span>
           <Button type={"danger"} onClick={(e)=>{
             const index=this.state.questionList.indexOf(question)
             // console.log(index)
@@ -114,7 +116,7 @@ export class C extends Component {
               questionList:this.state.questionList
             })
           }}>删除</Button>
-        </Form.Item>
+        </div>
       )
     })
     const questionEntryList = this.state.questionEntryList.map((questionEntry,index)=>{
@@ -127,7 +129,7 @@ export class C extends Component {
           }
         }} value={questionEntry} key={questionEntry.id}>
           {/*{console.log(questionEntry)}*/}
-          <p>类型：{questionEntry.type}  描述：{questionEntry.description}</p>
+          <span>类型：{questionEntry.type}  描述：{questionEntry.description}</span>
         </Checkbox>
       )
     })
@@ -147,7 +149,9 @@ export class C extends Component {
             <Input placeholder='请输入题目组名称' onChange={(e)=>{this.setState({name:e.target.value})}} value={this.state.name}/>
             {/*{console.log(this.state.name)}*/}
           </Form.Item>
-          {questionList}
+          <Form.Item {...formItemLayoutWithLabel} label='题目组列表'>
+            {questionList}
+          </Form.Item>
           <Form.Item {...formItemLayoutWithoutLabel}>
             <Button type="dashed"  onClick={()=>this.setState({questionEntryListVisible:true})} style={{ width: '60%' }}>
               <Icon type="plus" /> 添加题目
